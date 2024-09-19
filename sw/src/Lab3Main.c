@@ -38,17 +38,44 @@
 #include "../inc/tm4c123gh6pm.h"
 #include "../inc/Timer0A.h"
 #include "Lab3.h"
+#include "SwitchDriver.h"
+#include "LCD_Driver.h"
+#include "../inc/SysTickInts.h"
+#include "../inc/CortexM.h"
+#include "../inc/Timer0A.h"
+#include "../inc/LED.h"
+void portfTest(){
+	SYSCTL_RCGCGPIO_R |= 0x20;
+	while((SYSCTL_PRGPIO_R & 0x20) == 0);
+	GPIO_PORTF_LOCK_R = 0x4C4F434B;
+	GPIO_PORTF_CR_R = 0xFF;
+	GPIO_PORTF_DEN_R = 0x0E;
+	GPIO_PORTF_DIR_R = 0x0E; 
+}
+
+void SysTick_Handler(){
+	GPIO_PORTF_DATA_R ^= 0x02;
+}
 // ---------- Prototypes   -------------------------
-void DisableInterrupts(void); // Disable interrupts
-void EnableInterrupts(void);  // Enable interrupts
-void WaitForInterrupt(void);  // low power mode
+//void DisableInterrupts(void); // Disable interrupts
+//void EnableInterrupts(void);  // Enable interrupts
+//void WaitForInterrupt(void);  // low power mode
 int main(void){
   DisableInterrupts();
   PLL_Init(Bus80MHz);    // bus clock at 80 MHz
   // write this
-  EnableInterrupts();
-  while(1){
-      // write this
-  }
+	//portfTest();
+	ST7735_InitR(INITR_GREENTAB);
+	SysTick_Init(80000000);
+
+	//portfTest();
+
+	//Switch_Init();
+	LED_Init();
+	EnableInterrupts();
+	
+  drawClock();
+	while(1){}
+	
 }
 

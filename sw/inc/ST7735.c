@@ -114,7 +114,7 @@
 // ST7735
 // LED (pin 8) connected to +3.3 V
 // SCK (pin 7) connected to PA2 (SSI0Clk)
-// SDA (pin 6) MOSI, connected to PA5 (SSI0Tx)
+// SDA (pin 6) MOSI, connected` to PA5 (SSI0Tx)
 // A0  (pin 5) Data/Command connected to PA6 (GPIO), high for data, low for command
 // RESET (pin 4) connected to PA7 (GPIO)
 // CS  (pin 3) connected to PA3 (SSI0Fss)
